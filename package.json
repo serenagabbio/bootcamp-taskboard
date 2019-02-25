@@ -58,7 +58,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md,ts,html,component.html}": [
+    "*.{js,css,md,ts,html,component.html}": [
       "prettier --write",
       "tslint --fix",
       "git add"
