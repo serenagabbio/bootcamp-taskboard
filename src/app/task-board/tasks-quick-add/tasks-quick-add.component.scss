@@ -1,0 +1,29 @@
+.tasks-quick-add{
+  padding: 20px;
+  border: 1px solid grey;
+  border-radius: 20px;
+  width: 70%;
+  margin: auto;
+  height: 23%;
+  text-align: center;
+}
+
+.tasks-quick-add .input-line{
+  width: 100%;
+}
+
+.tasks-quick-add input{
+  width: 70%;
+  margin: 1vh;
+}
+
+.tasks-quick-add label{
+  display: inline-block;
+  width: 20%;
+  margin: 1vh;
+}
+
+.tasks-quick-add button{
+  margin: 3vh;
+  
+}

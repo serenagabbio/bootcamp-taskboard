@@ -1,0 +1,11 @@
+<div class="task-board">
+
+  <h2>Welcome to TaskBoard!</h2>
+
+  <tb-tasks-quick-add (taskCard)="onTaskCreated($event)">
+  </tb-tasks-quick-add>
+
+  <tb-tasks-list [tasksList]="tasksList">
+  </tb-tasks-list>
+
+</div>

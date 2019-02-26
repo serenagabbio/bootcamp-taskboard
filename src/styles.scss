@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+html{
+  margin: 0;
+  height: 100vh;
+}
+
+body{
+  margin: 0;
+  height: 100%;
+}
