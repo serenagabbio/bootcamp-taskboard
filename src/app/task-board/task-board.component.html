@@ -2,10 +2,16 @@
 
   <h2>Welcome to TaskBoard!</h2>
 
-  <tb-tasks-quick-add (taskCard)="onTaskCreated($event)">
+  <tb-tasks-quick-add (taskCreated) = "onTaskCreated($event)">
   </tb-tasks-quick-add>
 
-  <tb-tasks-list [tasksList]="tasksList">
+  <tb-tasks-list [taskList] = "taskListToDo" title="To Do" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)">
+  </tb-tasks-list>
+
+  <tb-tasks-list [taskList] = "taskListDoing" title="Doing" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)">
+  </tb-tasks-list>
+
+  <tb-tasks-list [taskList] = "taskListDone" title="Done" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)">
   </tb-tasks-list>
 
 </div>

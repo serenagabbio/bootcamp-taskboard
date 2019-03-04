@@ -1,11 +1,16 @@
-import { Task } from './tasks-card/task.model';
+import { environment } from './../../environments/environment';
+
+import { TasksHttpService } from './tasks-services/tasks-http.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TasksQuickAddComponent } from './tasks-quick-add/tasks-quick-add.component';
 import { TaskBoardComponent } from './task-board.component';
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { TasksCardComponent } from './tasks-card/tasks-card.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TasksService } from './tasks-services/tasks.service.base';
+import { TasksLocalService } from './tasks-services/tasks-local.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +19,13 @@ import { FormsModule } from '@angular/forms';
     TasksCardComponent,
     TaskBoardComponent
   ],
-  imports: [CommonModule, FormsModule],
-  exports: [TaskBoardComponent]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  exports: [TaskBoardComponent],
+  providers: [
+    {
+      provide: TasksService,
+      useClass: !environment.production ? TasksHttpService : TasksLocalService
+    }
+  ]
 })
 export class TaskBoardModule {}

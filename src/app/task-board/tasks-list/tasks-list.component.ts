@@ -1,19 +1,26 @@
-import { Task } from '../tasks-card/task.model';
-import { TasksCardComponent } from './../tasks-card/tasks-card.component';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { EventListener } from '@angular/core/src/debug/debug_node';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { TaskFromApi } from '../tasks-services/tasks.service.base';
 
 @Component({
   selector: 'tb-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.scss']
 })
-export class TasksListComponent implements AfterViewInit {
-  @Input() tasksList: Task[];
+export class TasksListComponent implements OnInit {
+  @Input() taskList: TaskFromApi[];
+  @Input() title: string;
+  @Output() taskUpdated = new EventEmitter<TaskFromApi>();
+  @Output() taskDeleted = new EventEmitter<TaskFromApi>();
 
   constructor() {}
 
-  ngAfterViewInit() {
-    //this.tasksList = [new Task('task', 'description')];
+  ngOnInit() {}
+
+  onTaskUpdated(event: TaskFromApi) {
+    this.taskUpdated.emit(event);
+  }
+
+  onTaskDeleted(event: TaskFromApi) {
+    this.taskDeleted.emit(event);
   }
 }

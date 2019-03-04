@@ -1,16 +1,16 @@
 <div class="tasks-quick-add">
+  <form [formGroup]="taskForm" (ngSubmit)="saveForm()">
+    
+    <div class="input-line">
+      <label>Title:</label>
+      <input type="text" formControlName="title" required />
+    </div>
 
-  <div class="input-line">
-      <label>Name:</label>
-      <input name="name" [(ngModel)]="name">
-  </div>
- 
-  <div class="input-line">
-    <label>Description:</label>
-    <input name="description" [(ngModel)]="description">
+    <div class="input-line">
+      <label>Text:</label>
+      <input type="text" formControlName="text" />
+    </div>
 
-  </div>
-
-  <button (click)="saveForm()">Submit</button>
-
+    <button [disabled]="!taskForm.valid">Save</button>
+  </form>
 </div>

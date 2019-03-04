@@ -1,5 +1,10 @@
-import { Task } from '../tasks-card/task.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  TasksService,
+  TaskFromApi,
+  TaskDraft
+} from '../tasks-services/tasks.service.base';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'tb-tasks-quick-add',
@@ -7,15 +12,23 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./tasks-quick-add.component.scss']
 })
 export class TasksQuickAddComponent implements OnInit {
-  @Output() taskCard = new EventEmitter<Task>();
-  name: string;
-  description: string;
+  taskForm: FormGroup;
+
+  @Output() taskCreated = new EventEmitter<TaskDraft>();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.taskForm = new FormGroup({
+      title: new FormControl(''),
+      text: new FormControl('')
+    });
+  }
 
   saveForm() {
-    this.taskCard.emit(new Task(this.name, this.description));
+    this.taskCreated.emit({
+      title: this.taskForm.get('title').value,
+      text: this.taskForm.get('text').value
+    });
   }
 }

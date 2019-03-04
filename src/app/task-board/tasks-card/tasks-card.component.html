@@ -1,7 +1,7 @@
 
-
-<p>
-  {{task.getTitle()}}: {{task.getDescription()}}
-</p>
-
-
+<div class="tasks-card">
+  <p>{{task.title | uppercase}} </p>
+   <p>{{task.text}}</p>
+  <button (click)="onCardUpdated()">Update</button>
+  <button (click)="onCardDeleted()">Delete</button>
+</div>
