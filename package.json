@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "^7.2.6",
     "@angular/router": "^7.2.6",
     "core-js": "^2.5.4",
-    "fsevents": "^1.2.7",
     "guid-typescript": "^1.0.9",
     "rxjs": "^6.0.0",
     "tslib": "^1.9.0",
@@ -53,10 +52,7 @@
     "typescript": "~3.2.4"
   },
   "husky": {
-    "hooks": {
-    
-     
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.{js,css,md,ts}": [
