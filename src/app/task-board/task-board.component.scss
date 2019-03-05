@@ -1,9 +1,17 @@
 
 .task-board{
   padding: 2vh;
-  height: 90%;
 }
 
 .task-board h2{
   text-align: center;
+}
+
+.list-container{
+  display: flex;
+  justify-content: center;
+}
+
+tb-tasks-list{
+  width: 25%;
 }

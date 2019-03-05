@@ -1,16 +1,19 @@
 .tasks-quick-add{
-  padding: 20px;
+  padding-top: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
   border: 1px solid grey;
   border-radius: 20px;
-  width: 70%;
+  width: 30%;
   margin: auto;
+  margin-bottom: 4vh;
   text-align: center;
 }
 
 .tasks-quick-add .input-line{
   width: 100%;
   display: inline-block;
-
   margin: 1vh;
 }
 
