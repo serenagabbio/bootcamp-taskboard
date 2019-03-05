@@ -15,11 +15,22 @@ export class TasksCardComponent implements OnInit {
 
   ngOnInit() {}
 
-  onCardUpdated() {
+  onCardMoved() {
+    if (this.task.isInProgress) {
+      this.task.isInProgress = false;
+      this.task.isComplete = true;
+    } else if (!this.task.isInProgress && !this.task.isComplete) {
+      this.task.isInProgress = true;
+    }
     this.taskUpdated.emit(this.task);
   }
 
   onCardDeleted() {
     this.taskDeleted.emit(this.task);
+  }
+
+  onFavourite() {
+    this.task.isFavourite = !this.task.isFavourite;
+    this.taskUpdated.emit(this.task);
   }
 }

@@ -23,7 +23,7 @@ describe('TasksCardComponent', () => {
       writtenAt: new Date(),
       isInProgress: false,
       isComplete: false,
-      isFavorite: false
+      isFavourite: false
     };
     fixture.detectChanges();
   });

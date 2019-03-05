@@ -1,7 +1,15 @@
+<div class="tasks-card"  [ngClass]="{ favourite: task.isFavourite }">
+  
+  <img
+    src="./assets/star.png"
+    alt="star"
+    (click)="onFavourite()"
+    class="fav-img"
+  />
 
-<div class="tasks-card">
-  <p>{{task.title | uppercase}} </p>
-   <p>{{task.text}}</p>
-  <button type="button" (click)="onCardUpdated()">Update</button>
-  <button type="button" (click)="onCardDeleted()">Delete</button>
+  <p>{{ task.title | uppercase }}</p>
+  <p>{{ task.text }}</p>
+
+  <button *ngIf="!task.isComplete" type="button" (click)="onCardMoved()" class="card-button">Move</button>
+  <button type="button" (click)="onCardDeleted()"  class="card-button">Delete</button>
 </div>
