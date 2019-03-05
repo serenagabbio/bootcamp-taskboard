@@ -14,6 +14,10 @@ export class TasksHttpService implements TasksService {
     return this.http.get<TaskFromApi[]>('http://localhost:3000/tasks');
   }
 
+  get(guid: string): Observable<TaskFromApi[]> {
+    return this.http.get<TaskFromApi[]>('http://localhost:3000/tasks/' + guid);
+  }
+
   create(task: TaskDraft): Observable<TaskFromApi> {
     const completeTask: TaskFromApi = {
       title: task.title,
@@ -22,7 +26,7 @@ export class TasksHttpService implements TasksService {
       writtenAt: new Date(),
       isInProgress: false,
       isComplete: false,
-      isFavorite: false
+      isFavourite: false
     };
     return this.http.post<TaskFromApi>(
       'http://localhost:3000/tasks',
@@ -30,24 +34,11 @@ export class TasksHttpService implements TasksService {
     );
   }
 
-  update(task: TaskDraft): Observable<TaskFromApi> {
-    const completeTask: TaskFromApi = {
-      title: task.title,
-      text: task.text,
-      guid: Guid.create().toString(),
-      writtenAt: new Date(),
-      isInProgress: false,
-      isComplete: false,
-      isFavorite: false
-    };
-    return this.http.post<TaskFromApi>(
-      'http://localhost:3000/tasks',
-      completeTask
-    );
+  update(task: TaskFromApi): Observable<TaskFromApi> {
+    return this.http.put<TaskFromApi>('http://localhost:3000/tasks', task);
   }
 
-  delete(task: TaskFromApi): Observable<TaskFromApi> {
-    const guid = task.guid;
+  delete(guid: string): Observable<TaskFromApi> {
     return this.http.delete<TaskFromApi>('http://localhost:3000/tasks/' + guid);
   }
 }

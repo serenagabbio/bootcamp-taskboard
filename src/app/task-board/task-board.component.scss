@@ -1,17 +1,17 @@
-
-.task-board{
+.task-board {
   padding: 2vh;
 }
 
-.task-board h2{
+.task-board h2 {
   text-align: center;
+  margin-top: 1vmin;
 }
 
-.list-container{
+.list-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
-tb-tasks-list{
+tb-tasks-list {
   width: 25%;
 }

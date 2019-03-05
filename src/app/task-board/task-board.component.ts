@@ -4,8 +4,7 @@ import {
   TaskDraft,
   TaskFromApi
 } from './tasks-services/tasks.service.base';
-import { forkJoin } from 'rxjs';
-import { mergeMap, concatMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'tb-task-board',
@@ -27,7 +26,7 @@ export class TaskBoardComponent implements OnInit {
 
   filterTaskLists(taskList) {
     this.taskListToDo = taskList.filter(
-      task => !(task.isInProgress && task.isComplete)
+      task => !task.isInProgress && !task.isComplete
     );
     this.taskListDoing = taskList.filter(task => task.isInProgress);
     this.taskListDone = taskList.filter(task => task.isComplete);
@@ -36,7 +35,7 @@ export class TaskBoardComponent implements OnInit {
   onTaskCreated(taskCreated: TaskDraft) {
     this.tasksService
       .create(taskCreated)
-      .pipe(concatMap(() => this.tasksService.getAll()))
+      .pipe(switchMap(() => this.tasksService.getAll()))
       .subscribe(taskList => {
         this.filterTaskLists(taskList);
       });
@@ -45,16 +44,17 @@ export class TaskBoardComponent implements OnInit {
   onTaskUpdated(taskUpdated: TaskFromApi) {
     this.tasksService
       .update(taskUpdated)
-      .pipe(concatMap(() => this.tasksService.getAll()))
+      .pipe(switchMap(() => this.tasksService.getAll()))
       .subscribe(taskList => {
+        console.log(typeof taskList);
         this.filterTaskLists(taskList);
       });
   }
 
   onTaskDeleted(taskDeleted: TaskFromApi) {
     this.tasksService
-      .delete(taskDeleted)
-      .pipe(concatMap(() => this.tasksService.getAll()))
+      .delete(taskDeleted.guid)
+      .pipe(switchMap(() => this.tasksService.getAll()))
       .subscribe(taskList => {
         this.filterTaskLists(taskList);
       });

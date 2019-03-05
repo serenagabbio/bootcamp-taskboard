@@ -1,10 +1,9 @@
-
-  <h2>{{ title }}</h2>
-  <tb-tasks-card
-    class="card"
-    *ngFor="let task of taskList"
-    [task]="task"
-    (taskUpdated)="onTaskUpdated($event)"
-    (taskDeleted)="onTaskDeleted($event)"
-  >
-  </tb-tasks-card>
+<h3>{{ title | uppercase }}</h3>
+<tb-tasks-card
+  class="card"
+  *ngFor="let task of taskList"
+  [task]="task"
+  (taskUpdated)="onTaskUpdated($event)"
+  (taskDeleted)="onTaskDeleted($event)"
+>
+</tb-tasks-card>

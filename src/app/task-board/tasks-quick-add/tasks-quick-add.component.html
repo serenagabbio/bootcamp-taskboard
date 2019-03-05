@@ -1,9 +1,7 @@
 <div class="tasks-quick-add">
-
   <h3>New Task</h3>
 
   <form [formGroup]="taskForm" (ngSubmit)="saveForm()">
-    
     <div class="input-line">
       <label>Title:</label>
       <input type="text" formControlName="title" required />
@@ -14,6 +12,6 @@
       <input type="text" formControlName="text" />
     </div>
 
-    <button type="button" [disabled]="!taskForm.valid">Save</button>
+    <button [disabled]="!taskForm.valid">Save</button>
   </form>
 </div>

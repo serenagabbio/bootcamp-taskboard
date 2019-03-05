@@ -24,7 +24,7 @@ export class TasksLocalService implements TasksService {
       writtenAt: new Date(),
       isInProgress: false,
       isComplete: false,
-      isFavorite: false
+      isFavourite: false
     };
     this.taskList.push(completeTask);
     return of(completeTask);
@@ -40,13 +40,16 @@ export class TasksLocalService implements TasksService {
     return of(task);
   }
 
-  delete(task: TaskFromApi): Observable<TaskFromApi> {
-    const index = this.taskList.findIndex(
-      element => element.guid === task.guid
-    );
+  delete(guid: string): Observable<TaskFromApi> {
+    const index = this.taskList.findIndex(element => element.guid === guid);
     if (index) {
       this.taskList.splice(index, 1);
     }
-    return of(task);
+    return of(this.taskList[index]);
+  }
+
+  get(guid: string): Observable<TaskFromApi[]> {
+    let tasksList = this.taskList.filter(element => element.guid === guid);
+    return of(tasksList);
   }
 }
