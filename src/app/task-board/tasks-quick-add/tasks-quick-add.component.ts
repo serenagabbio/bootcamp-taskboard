@@ -5,6 +5,7 @@ import {
   TaskDraft
 } from '../tasks-services/tasks.service.base';
 import { FormGroup, FormControl } from '@angular/forms';
+import { HighlightService } from '../tasks-services/highlight.service';
 
 @Component({
   selector: 'tb-tasks-quick-add',
@@ -16,7 +17,7 @@ export class TasksQuickAddComponent implements OnInit {
 
   @Output() taskCreated = new EventEmitter<TaskDraft>();
 
-  constructor() {}
+  constructor(private highlightService: HighlightService) {}
 
   ngOnInit() {
     this.taskForm = new FormGroup({
@@ -25,10 +26,23 @@ export class TasksQuickAddComponent implements OnInit {
     });
   }
 
+  resetForm() {
+    this.taskForm.reset();
+  }
+
   saveForm() {
     this.taskCreated.emit({
       title: this.taskForm.get('title').value,
       text: this.taskForm.get('text').value
     });
+    this.resetForm();
+  }
+
+  onTitleKeyUp() {
+    this.highlightService.titleKeyUp.next(this.taskForm.get('title').value);
+  }
+
+  onTextKeyUp() {
+    this.highlightService.textKeyUp.next(this.taskForm.get('text').value);
   }
 }

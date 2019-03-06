@@ -7,11 +7,19 @@
 
 .tasks-card.favourite {
   filter: grayscale(0);
-  border: 1px solid orange;
+  border: 2px solid orange;
 
   .fav-img {
     filter: grayscale(0);
   }
+}
+
+.tasks-card.highlight {
+  background-color: lightyellow;
+}
+
+.tasks-card.editingMode {
+  border: 2px dashed mediumblue;
 }
 
 .fav-img {

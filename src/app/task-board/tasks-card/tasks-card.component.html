@@ -1,15 +1,45 @@
-<div class="tasks-card"  [ngClass]="{ favourite: task.isFavourite }">
-  
+<div
+  class="tasks-card"
+  [ngClass]="{
+    favourite: task.isFavourite,
+    highlight: isTitleHighlight || isTextHighlight,
+    editingMode: editMode
+  }"
+  (dblclick)="onDoubleClick($event)"
+>
   <img
+    *ngIf="!task.isComplete && !editMode"
     src="./assets/star.png"
     alt="star"
     (click)="onFavourite()"
     class="fav-img"
   />
 
-  <p>{{ task.title | uppercase }}</p>
-  <p>{{ task.text }}</p>
+  <p #title [attr.contenteditable]="editMode">{{ task.title | uppercase }}</p>
+  <p #text [attr.contenteditable]="editMode">{{ task.text }}</p>
 
-  <button *ngIf="!task.isComplete" type="button" (click)="onCardMoved()" class="card-button">Move</button>
-  <button type="button" (click)="onCardDeleted()"  class="card-button">Delete</button>
+  <button
+    *ngIf="!task.isComplete && !editMode"
+    type="button"
+    (click)="onCardMoved()"
+    class="card-button"
+  >Move
+  </button>
+
+  <button
+    *ngIf="!editMode"
+    type="button"
+    (click)="onCardDeleted()"
+    class="card-button"
+  >Delete
+  </button>
+
+  <button
+  *ngIf="editMode"
+  type="button"
+  (click)="onCardEdited()"
+  class="card-button"
+>Save
+</button>
+
 </div>
