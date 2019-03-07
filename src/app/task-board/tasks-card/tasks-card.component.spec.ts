@@ -1,7 +1,6 @@
-import { NO_ERRORS_SCHEMA, createInput } from '@angular/compiler/src/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TasksCardComponent } from './tasks-card.component';
+import { By } from '@angular/platform-browser';
 
 describe('TasksCardComponent', () => {
   let component: TasksCardComponent;
@@ -45,10 +44,10 @@ describe('TasksCardComponent', () => {
 
   it('should throw error if try to move a completed task card', () => {
     component.task.isComplete = true;
-    try{
-      component.onCardMoved()
-    }catch(error){
-      expect(error.message).toEqual("Cannot move a task completed");
+    try {
+      component.onCardMoved();
+    } catch (error) {
+      expect(error.message).toEqual('Cannot move a task completed');
     }
   });
 
@@ -64,14 +63,17 @@ describe('TasksCardComponent', () => {
   });
 
   it('should open editMode if do double click', () => {
-    component.onDoubleClick();
+    const card = fixture.debugElement.query(By.css('.tasks-card'));
+    card.nativeElement.dispatchEvent(new Event('dblclick'));
     expect(component.editMode).toBeTruthy();
   });
 
   it('should close editMode if click save during edit mode', () => {
     component.editMode = true;
-    component.onCardEdited();
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('#edit-button'));
+    button.nativeElement.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
     expect(component.editMode).toBeFalsy();
   });
-
 });

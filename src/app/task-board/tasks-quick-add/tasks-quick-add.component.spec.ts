@@ -3,8 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TasksQuickAddComponent } from './tasks-quick-add.component';
 import { NO_ERRORS_SCHEMA } from '@angular/compiler/src/core';
 import { By } from '@angular/platform-browser';
-import { emit } from 'cluster';
-import { doesNotThrow } from 'assert';
 
 describe('TasksQuickAddComponent', () => {
   let component: TasksQuickAddComponent;
@@ -31,8 +29,8 @@ describe('TasksQuickAddComponent', () => {
     spyOn(component.taskCreated, 'emit');
     const title = fixture.debugElement.query(By.css('input'));
     title.nativeElement.value = 'Title';
-    
-    const button =  fixture.debugElement.query(By.css('button'));
+
+    const button = fixture.debugElement.query(By.css('button'));
     button.nativeElement.click();
     expect(component.taskCreated.emit).toHaveBeenCalled();
   });
@@ -40,12 +38,11 @@ describe('TasksQuickAddComponent', () => {
   it('should reset form after saving', () => {
     const title = fixture.debugElement.query(By.css('input'));
     title.nativeElement.value = 'Title';
-    const button =  fixture.debugElement.query(By.css('button'));
+    const button = fixture.debugElement.query(By.css('button'));
     component.taskCreated.subscribe(() => {
       fixture.detectChanges();
       expect(title.nativeElement.value).toBeNull();
     });
     button.nativeElement.click();
   });
-
 });
