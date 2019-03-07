@@ -56,7 +56,7 @@ describe('TasksCardComponent', () => {
     expect(component.task.isFavourite).toBeTruthy();
   });
 
-  it('should remove card to favourite', () => {
+  it('should remove card from favourite', () => {
     component.task.isFavourite = true;
     component.onFavourite();
     expect(component.task.isFavourite).toBeFalsy();

@@ -1,21 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { TasksService, TaskDraft, TaskFromApi } from './tasks.service.base';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Guid } from 'guid-typescript';
+import { AppConfiguration, APP_CONFIG } from 'src/app/app-configuration';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksHttpService implements TasksService {
-  constructor(private http: HttpClient) {}
+  baseUrl: string;
+
+  constructor(private http: HttpClient, @Inject(APP_CONFIG) private config: AppConfiguration) {
+    this.baseUrl = this.config.apiTasksUrl;
+  }
 
   getAll(): Observable<TaskFromApi[]> {
-    return this.http.get<TaskFromApi[]>('http://localhost:3000/tasks');
+    return this.http.get<TaskFromApi[]>(this.baseUrl);
   }
 
   get(guid: string): Observable<TaskFromApi[]> {
-    return this.http.get<TaskFromApi[]>('http://localhost:3000/tasks/' + guid);
+    return this.http.get<TaskFromApi[]>(this.baseUrl + '/' + guid);
   }
 
   create(task: TaskDraft): Observable<TaskFromApi> {
@@ -29,16 +34,16 @@ export class TasksHttpService implements TasksService {
       isFavourite: false
     };
     return this.http.post<TaskFromApi>(
-      'http://localhost:3000/tasks',
+      this.baseUrl,
       completeTask
     );
   }
 
   update(task: TaskFromApi): Observable<TaskFromApi> {
-    return this.http.put<TaskFromApi>('http://localhost:3000/tasks', task);
+    return this.http.put<TaskFromApi>(this.baseUrl, task);
   }
 
   delete(guid: string): Observable<TaskFromApi> {
-    return this.http.delete<TaskFromApi>('http://localhost:3000/tasks/' + guid);
+    return this.http.delete<TaskFromApi>(this.baseUrl + '/' + guid);
   }
 }

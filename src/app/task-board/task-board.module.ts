@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TasksService } from './tasks-services/tasks.service.base';
 import { TasksLocalService } from './tasks-services/tasks-local.service';
 import { HttpClientModule } from '@angular/common/http';
+import { provideAppConfig } from '../app-configuration';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   exports: [TaskBoardComponent],
-  providers: [
+  providers: [ 
+    provideAppConfig,
     {
       provide: TasksService,
-      useClass: environment.production ? TasksHttpService : TasksLocalService
+      useClass: !environment.production ? TasksHttpService : TasksLocalService
     }
   ]
 })
