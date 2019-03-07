@@ -34,18 +34,20 @@ export class TasksLocalService implements TasksService {
     const index = this.taskList.findIndex(
       element => element.guid === task.guid
     );
-    if (index) {
+    if (index >= 0) {
       this.taskList[index] = task;
     }
     return of(task);
   }
 
   delete(guid: string): Observable<TaskFromApi> {
+    let oldTask = null;
     const index = this.taskList.findIndex(element => element.guid === guid);
-    if (index) {
+    if (index >= 0) {
+      oldTask = this.taskList[index];
       this.taskList.splice(index, 1);
     }
-    return of(this.taskList[index]);
+    return of(oldTask);
   }
 
   get(guid: string): Observable<TaskFromApi[]> {

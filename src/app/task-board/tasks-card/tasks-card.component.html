@@ -5,7 +5,7 @@
     highlight: isTitleHighlight || isTextHighlight,
     editingMode: editMode
   }"
-  (dblclick)="onDoubleClick()"
+  (dblclick)="onEdit()"
 >
   <img
     *ngIf="!task.isComplete && !editMode"
@@ -38,7 +38,7 @@
   id="edit-button"
   *ngIf="editMode"
   type="button"
-  (click)="onCardEdited()"
+  (click)="onSaveEdited()"
   class="card-button"
 >Save
 </button>

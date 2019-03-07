@@ -57,15 +57,15 @@ export class TasksCardComponent implements OnInit, OnDestroy {
     this.taskUpdated.emit(this.task);
   }
 
-  onDoubleClick() {
-    if (!this.editMode) {
-      this.editMode = true;
-    } else {
-      this.onCardEdited();
+  onEdit() {
+    if(this.editMode){
+      this.titleElement.nativeElement.textContent = this.task.title.toUpperCase();
+      this.textElement.nativeElement.textContent = this.task.text;
     }
+    this.editMode = !this.editMode;
   }
 
-  onCardEdited() {
+  onSaveEdited() {
     this.editMode = false;
     this.task.title = this.titleElement.nativeElement.textContent;
     this.task.text = this.textElement.nativeElement.textContent;
