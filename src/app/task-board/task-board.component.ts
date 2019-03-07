@@ -46,7 +46,6 @@ export class TaskBoardComponent implements OnInit {
       .update(taskUpdated)
       .pipe(switchMap(() => this.tasksService.getAll()))
       .subscribe(taskList => {
-        console.log(typeof taskList);
         this.filterTaskLists(taskList);
       });
   }

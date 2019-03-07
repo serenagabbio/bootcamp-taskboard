@@ -39,10 +39,10 @@ export class TasksQuickAddComponent implements OnInit {
   }
 
   onTitleKeyUp() {
-    this.highlightService.titleKeyUp.next(this.taskForm.get('title').value);
+    this.highlightService.titleKeyUp$$.next(this.taskForm.get('title').value);
   }
 
   onTextKeyUp() {
-    this.highlightService.textKeyUp.next(this.taskForm.get('text').value);
+    this.highlightService.textKeyUp$$.next(this.taskForm.get('text').value);
   }
 }

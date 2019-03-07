@@ -24,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     {
       provide: TasksService,
-      useClass: !environment.production ? TasksHttpService : TasksLocalService
+      useClass: environment.production ? TasksHttpService : TasksLocalService
     }
   ]
 })

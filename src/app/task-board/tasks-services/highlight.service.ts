@@ -6,8 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class HighlightService {
 
-  titleKeyUp = new  Subject<string>();
-  textKeyUp = new  Subject<string>();
+  titleKeyUp$$ = new  Subject<string>();
+  textKeyUp$$ = new  Subject<string>();
 
   constructor() { }
 }

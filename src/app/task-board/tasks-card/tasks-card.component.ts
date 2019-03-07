@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { TaskFromApi } from '../tasks-services/tasks.service.base';
 import { HighlightService } from '../tasks-services/highlight.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tb-tasks-card',
   templateUrl: './tasks-card.component.html',
   styleUrls: ['./tasks-card.component.scss']
 })
-export class TasksCardComponent implements OnInit {
+export class TasksCardComponent implements OnInit, OnDestroy {
   @Input() task: TaskFromApi;
   @Output() taskUpdated = new EventEmitter<TaskFromApi>();
   @Output() taskDeleted = new EventEmitter<TaskFromApi>();
@@ -17,21 +18,26 @@ export class TasksCardComponent implements OnInit {
   isTitleHighlight: boolean = false;
   isTextHighlight: boolean = false;
   editMode: boolean = false;
+  titleSubscription$ = new Subscription();
+  textSubscription$ = new Subscription();
 
   constructor(private highlightService: HighlightService) {}
 
   ngOnInit() {
-    this.highlightService.titleKeyUp.subscribe(data => {
+    this.titleSubscription$ = this.highlightService.titleKeyUp$$.subscribe(data => {
       this.isTitleHighlight =
         data && this.task.title.toLowerCase().includes(data.toLowerCase());
     });
-    this.highlightService.textKeyUp.subscribe(data => {
+    this.textSubscription$ = this.highlightService.textKeyUp$$.subscribe(data => {
       this.isTextHighlight =
         data && this.task.text.toLowerCase().includes(data.toLowerCase());
     });
   }
 
   onCardMoved() {
+    if(this.task.isComplete){
+      throw new Error("Cannot move a task completed");
+    }
     if (this.task.isInProgress) {
       this.task.isInProgress = false;
       this.task.isComplete = true;
@@ -51,8 +57,7 @@ export class TasksCardComponent implements OnInit {
     this.taskUpdated.emit(this.task);
   }
 
-  onDoubleClick(event) {
-    event.preventDefault();
+  onDoubleClick() {
     if (!this.editMode) {
       this.editMode = true;
     } else {
@@ -64,8 +69,12 @@ export class TasksCardComponent implements OnInit {
     this.editMode = false;
     this.task.title = this.titleElement.nativeElement.textContent;
     this.task.text = this.textElement.nativeElement.textContent;
-    console.log('task title: ', this.task.title);
-    console.log('task text: ', this.task.text);
     this.taskUpdated.emit(this.task);
   }
+
+  ngOnDestroy(){
+    this.titleSubscription$.unsubscribe();
+    this.textSubscription$.unsubscribe();
+  }
+  
 }

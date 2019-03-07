@@ -5,7 +5,7 @@
     highlight: isTitleHighlight || isTextHighlight,
     editingMode: editMode
   }"
-  (dblclick)="onDoubleClick($event)"
+  (dblclick)="onDoubleClick()"
 >
   <img
     *ngIf="!task.isComplete && !editMode"

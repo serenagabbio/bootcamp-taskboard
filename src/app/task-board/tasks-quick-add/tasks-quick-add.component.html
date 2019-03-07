@@ -1,7 +1,7 @@
 <div class="tasks-quick-add">
   <h3>New Task</h3>
 
-  <form [formGroup]="taskForm" (ngSubmit)="saveForm()">
+  <form [formGroup]="taskForm">
     <div class="input-line">
       <label>Title:</label>
       <input type="text" formControlName="title" required (keyup)="onTitleKeyUp()" />
@@ -11,7 +11,7 @@
       <label>Text:</label>
       <input type="text" formControlName="text" (keyup)="onTextKeyUp()"/>
     </div>
-
-    <button [disabled]="!taskForm.valid">Save</button>
   </form>
+
+  <button [disabled]="!taskForm.valid" (click)="saveForm()">Save</button>
 </div>
