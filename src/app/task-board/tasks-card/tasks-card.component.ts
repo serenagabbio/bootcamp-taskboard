@@ -25,9 +25,9 @@ export class TasksCardComponent implements OnInit, OnDestroy {
   @ViewChild('title') titleElement: ElementRef;
   edited = false;
 
-  isTitleHighlighted: boolean = false;
-  isTextHighlighted: boolean = false;
-  editMode: boolean = false;
+  isTitleHighlighted = false;
+  isTextHighlighted = false;
+  editMode = false;
   titleSubscription$ = new Subscription();
   textSubscription$ = new Subscription();
 

@@ -51,7 +51,7 @@ export class TasksLocalService implements TasksService {
   }
 
   get(guid: string): Observable<TaskFromApi[]> {
-    let tasksList = this.taskList.filter(element => element.guid === guid);
+    const tasksList = this.taskList.filter(element => element.guid === guid);
     return of(tasksList);
   }
 }

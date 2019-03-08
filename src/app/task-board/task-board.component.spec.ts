@@ -34,7 +34,7 @@ describe('TaskBoardComponent', () => {
   });
 
   it('should filter tasks by complete status', () => {
-    let taskToDo = {
+    const taskToDo = {
       guid: '123',
       title: 'task title',
       text: 'task text',
@@ -43,7 +43,7 @@ describe('TaskBoardComponent', () => {
       isComplete: false,
       isFavourite: false
     };
-    let taskDoing = {
+    const taskDoing = {
       guid: '123',
       title: 'task title',
       text: 'task text',
@@ -52,7 +52,7 @@ describe('TaskBoardComponent', () => {
       isComplete: false,
       isFavourite: false
     };
-    let taskLists = [taskToDo, taskDoing];
+    const taskLists = [taskToDo, taskDoing];
     component.filterTaskLists(taskLists);
     expect(component.taskListToDo.length).toEqual(1);
     expect(component.taskListToDo[0].guid).toEqual(taskToDo.guid);
@@ -61,8 +61,8 @@ describe('TaskBoardComponent', () => {
   });
 
   it('should create a new task', async () => {
-    let oldLength = component.taskListToDo.length;
-    let taskToDo = {
+    const oldLength = component.taskListToDo.length;
+    const taskToDo = {
       guid: '123',
       title: 'task title'
     };
@@ -72,16 +72,16 @@ describe('TaskBoardComponent', () => {
 
   it('should update a task', async () => {
     await component.onTaskCreated({ title: 'task title', text: 'task text' });
-    let task = component.taskListToDo[component.taskListToDo.length - 1];
+    const task = component.taskListToDo[component.taskListToDo.length - 1];
     task.title = 'new title';
     await component.onTaskUpdated(task);
-    let updatedTask = component.taskListToDo[component.taskListToDo.length - 1];
+    const updatedTask = component.taskListToDo[component.taskListToDo.length - 1];
     expect(updatedTask.title).toEqual('new title');
   });
 
   it('should delete a task', async () => {
-    let oldLength = component.taskListToDo.length;
-    let taskToDo = {
+    const oldLength = component.taskListToDo.length;
+    const taskToDo = {
       guid: '123',
       title: 'task title',
       text: 'task text',

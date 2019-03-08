@@ -6,7 +6,7 @@ import { TasksLocalService } from './tasks-local.service';
 
 describe('TasksLocalService', () => {
   let tasksLocalService: TasksLocalService;
-  let injectionToken = new InjectionToken('app-config');
+  const injectionToken = new InjectionToken('app-config');
   let existingTaskGuid: string;
 
   beforeEach(() => {

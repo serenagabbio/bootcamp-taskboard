@@ -7,7 +7,7 @@ import { provideAppConfig } from 'src/app/app-configuration';
 
 describe('TasksHttpService', () => {
   let tasksHttpService: TasksHttpService;
-  let injectionToken = new InjectionToken('app-config');
+  const injectionToken = new InjectionToken('app-config');
   let existingTaskGuid: string;
 
   beforeEach(() => {
