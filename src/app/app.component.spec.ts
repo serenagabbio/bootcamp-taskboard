@@ -3,7 +3,6 @@ import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -22,5 +21,4 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('task-board');
   }));
-  
 });

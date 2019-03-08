@@ -22,7 +22,7 @@ import { provideAppConfig } from '../app-configuration';
   ],
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   exports: [TaskBoardComponent],
-  providers: [ 
+  providers: [
     provideAppConfig,
     {
       provide: TasksService,

@@ -32,4 +32,66 @@ describe('TaskBoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should filter tasks by complete status', () => {
+    let taskToDo = {
+      guid: '123',
+      title: 'task title',
+      text: 'task text',
+      writtenAt: new Date(),
+      isInProgress: false,
+      isComplete: false,
+      isFavourite: false
+    };
+    let taskDoing = {
+      guid: '123',
+      title: 'task title',
+      text: 'task text',
+      writtenAt: new Date(),
+      isInProgress: true,
+      isComplete: false,
+      isFavourite: false
+    };
+    let taskLists = [taskToDo, taskDoing];
+    component.filterTaskLists(taskLists);
+    expect(component.taskListToDo.length).toEqual(1);
+    expect(component.taskListToDo[0].guid).toEqual(taskToDo.guid);
+    expect(component.taskListDoing.length).toEqual(1);
+    expect(component.taskListDoing[0]).toEqual(taskDoing);
+  });
+
+  it('should create a new task', async () => {
+    let oldLength = component.taskListToDo.length;
+    let taskToDo = {
+      guid: '123',
+      title: 'task title'
+    };
+    await component.onTaskCreated(taskToDo);
+    expect(component.taskListToDo.length).toBeGreaterThan(oldLength);
+  });
+
+  it('should update a task', async () => {
+    await component.onTaskCreated({ title: 'task title', text: 'task text' });
+    let task = component.taskListToDo[component.taskListToDo.length - 1];
+    task.title = 'new title';
+    await component.onTaskUpdated(task);
+    let updatedTask = component.taskListToDo[component.taskListToDo.length - 1];
+    expect(updatedTask.title).toEqual('new title');
+  });
+
+  it('should delete a task', async () => {
+    let oldLength = component.taskListToDo.length;
+    let taskToDo = {
+      guid: '123',
+      title: 'task title',
+      text: 'task text',
+      writtenAt: new Date(),
+      isInProgress: false,
+      isComplete: false,
+      isFavourite: false
+    };
+    await component.onTaskCreated(taskToDo);
+    await component.onTaskDeleted(taskToDo);
+    expect(component.taskListToDo.length).toBeGreaterThanOrEqual(oldLength);
+  });
 });

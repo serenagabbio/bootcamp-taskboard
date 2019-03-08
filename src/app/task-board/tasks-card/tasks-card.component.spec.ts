@@ -76,4 +76,22 @@ describe('TasksCardComponent', () => {
     fixture.detectChanges();
     expect(component.editMode).toBeFalsy();
   });
+
+  it('text should have differences after save editing', () => {
+    const oldText = component.task.text;
+    component.editMode = true;
+    component.textElement.nativeElement.textContent = 'another text';
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('#edit-button'));
+    button.nativeElement.dispatchEvent(new Event('click'));
+    expect(component.task.text).not.toEqual(oldText);
+  });
+
+  afterEach(() => {
+    spyOn(component.titleSubscription$, 'unsubscribe');
+    spyOn(component.textSubscription$, 'unsubscribe');
+    fixture.destroy();
+    expect(component.textSubscription$.unsubscribe).toHaveBeenCalled();
+    expect(component.titleSubscription$.unsubscribe).toHaveBeenCalled();
+  });
 });
