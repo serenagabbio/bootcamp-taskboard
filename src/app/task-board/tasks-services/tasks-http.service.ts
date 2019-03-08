@@ -11,7 +11,10 @@ import { AppConfiguration, APP_CONFIG } from 'src/app/app-configuration';
 export class TasksHttpService implements TasksService {
   baseUrl: string;
 
-  constructor(private http: HttpClient, @Inject(APP_CONFIG) private config: AppConfiguration) {
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_CONFIG) private config: AppConfiguration
+  ) {
     this.baseUrl = this.config.apiTasksUrl;
   }
 
@@ -33,10 +36,7 @@ export class TasksHttpService implements TasksService {
       isComplete: false,
       isFavourite: false
     };
-    return this.http.post<TaskFromApi>(
-      this.baseUrl,
-      completeTask
-    );
+    return this.http.post<TaskFromApi>(this.baseUrl, completeTask);
   }
 
   update(task: TaskFromApi): Observable<TaskFromApi> {

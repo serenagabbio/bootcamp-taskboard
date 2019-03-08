@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { TasksService, TaskDraft, TaskFromApi } from './tasks.service.base';
-import { Observable, defer, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Guid } from 'guid-typescript';
 
 @Injectable({

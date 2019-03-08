@@ -2,7 +2,7 @@
   class="tasks-card"
   [ngClass]="{
     favourite: task.isFavourite,
-    highlight: isTitleHighlight || isTextHighlight,
+    highlight: isTitleHighlighted || isTextHighlighted,
     editingMode: editMode
   }"
   (dblclick)="onEdit()"
@@ -15,15 +15,20 @@
     class="fav-img"
   />
 
-  <p #title [attr.contenteditable]="editMode">{{ task.title | uppercase }}</p>
-  <p #text [attr.contenteditable]="editMode">{{ task.text }}</p>
+  <p #title [attr.contenteditable]="editMode" (keyup)="checkEditing()">
+    {{ task.title | uppercase }}
+  </p>
+  <p #text [attr.contenteditable]="editMode" (keyup)="checkEditing()">
+    {{ task.text }}
+  </p>
 
   <button
     *ngIf="!task.isComplete && !editMode"
     type="button"
     (click)="onCardMoved()"
     class="card-button"
-  >Move
+  >
+    Move
   </button>
 
   <button
@@ -31,16 +36,19 @@
     type="button"
     (click)="onCardDeleted()"
     class="card-button"
-  >Delete
+  >
+    Delete
   </button>
 
   <button
-  id="edit-button"
-  *ngIf="editMode"
-  type="button"
-  (click)="onSaveEdited()"
-  class="card-button"
->Save
-</button>
-
+    id="edit-button"
+    *ngIf="editMode"
+    type="button"
+    (click)="onSaveEdited()"
+    class="card-button"
+    value="{{ title.textContent }}"
+    [disabled]="!edited"
+  >
+    Save
+  </button>
 </div>

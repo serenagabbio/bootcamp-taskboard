@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from '@angular/core';
 import { TaskFromApi } from '../tasks-services/tasks.service.base';
 import { HighlightService } from '../tasks-services/highlight.service';
 import { Subscription } from 'rxjs';
@@ -14,9 +23,10 @@ export class TasksCardComponent implements OnInit, OnDestroy {
   @Output() taskDeleted = new EventEmitter<TaskFromApi>();
   @ViewChild('text') textElement: ElementRef;
   @ViewChild('title') titleElement: ElementRef;
-  
-  isTitleHighlight: boolean = false;
-  isTextHighlight: boolean = false;
+  edited = false;
+
+  isTitleHighlighted: boolean = false;
+  isTextHighlighted: boolean = false;
   editMode: boolean = false;
   titleSubscription$ = new Subscription();
   textSubscription$ = new Subscription();
@@ -24,19 +34,25 @@ export class TasksCardComponent implements OnInit, OnDestroy {
   constructor(private highlightService: HighlightService) {}
 
   ngOnInit() {
-    this.titleSubscription$ = this.highlightService.titleKeyUp$$.subscribe(data => {
-      this.isTitleHighlight =
-        data && this.task.title.toLowerCase().includes(data.toLowerCase());
-    });
-    this.textSubscription$ = this.highlightService.textKeyUp$$.subscribe(data => {
-      this.isTextHighlight =
-        data && this.task.text.toLowerCase().includes(data.toLowerCase());
-    });
+    this.titleSubscription$ = this.highlightService.titleKeyUp$$.subscribe(
+      data =>
+        (this.isTitleHighlighted = this.highlightService.isHighlighted(
+          data,
+          this.task.title
+        ))
+    );
+    this.textSubscription$ = this.highlightService.textKeyUp$$.subscribe(
+      data =>
+        (this.isTextHighlighted = this.highlightService.isHighlighted(
+          data,
+          this.task.text
+        ))
+    );
   }
 
   onCardMoved() {
-    if(this.task.isComplete){
-      throw new Error("Cannot move a task completed");
+    if (this.task.isComplete) {
+      throw new Error('Cannot move a task completed');
     }
     if (this.task.isInProgress) {
       this.task.isInProgress = false;
@@ -58,7 +74,7 @@ export class TasksCardComponent implements OnInit, OnDestroy {
   }
 
   onEdit() {
-    if(this.editMode){
+    if (this.editMode) {
       this.titleElement.nativeElement.textContent = this.task.title.toUpperCase();
       this.textElement.nativeElement.textContent = this.task.text;
     }
@@ -72,9 +88,17 @@ export class TasksCardComponent implements OnInit, OnDestroy {
     this.taskUpdated.emit(this.task);
   }
 
-  ngOnDestroy(){
+  checkEditing() {
+    this.edited = !(
+      this.task.title.toUpperCase().trim() ===
+        this.titleElement.nativeElement.textContent.trim() &&
+      this.task.text.trim() ===
+        this.textElement.nativeElement.textContent.trim()
+    );
+  }
+
+  ngOnDestroy() {
     this.titleSubscription$.unsubscribe();
     this.textSubscription$.unsubscribe();
   }
-  
 }

@@ -4,12 +4,17 @@
   <form [formGroup]="taskForm">
     <div class="input-line">
       <label>Title:</label>
-      <input type="text" formControlName="title" required (keyup)="onTitleKeyUp()" />
+      <input
+        type="text"
+        formControlName="title"
+        required
+        (keyup)="onTitleKeyUp()"
+      />
     </div>
 
     <div class="input-line">
       <label>Text:</label>
-      <input type="text" formControlName="text" (keyup)="onTextKeyUp()"/>
+      <input type="text" formControlName="text" (keyup)="onTextKeyUp()" />
     </div>
   </form>
 

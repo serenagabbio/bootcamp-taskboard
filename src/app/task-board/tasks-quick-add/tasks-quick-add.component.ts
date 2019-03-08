@@ -1,9 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {
-  TasksService,
-  TaskFromApi,
-  TaskDraft
-} from '../tasks-services/tasks.service.base';
+import { TaskDraft } from '../tasks-services/tasks.service.base';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HighlightService } from '../tasks-services/highlight.service';
 
@@ -39,10 +35,10 @@ export class TasksQuickAddComponent implements OnInit {
   }
 
   onTitleKeyUp() {
-    this.highlightService.titleKeyUp$$.next(this.taskForm.get('title').value);
+    this.highlightService.emitTitleKeyUp(this.taskForm.get('title').value);
   }
 
   onTextKeyUp() {
-    this.highlightService.textKeyUp$$.next(this.taskForm.get('text').value);
+    this.highlightService.emitTextKeyUp(this.taskForm.get('text').value);
   }
 }
