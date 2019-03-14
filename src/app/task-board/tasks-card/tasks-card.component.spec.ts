@@ -32,20 +32,20 @@ describe('TasksCardComponent', () => {
   });
 
   it('should move card from todo to doing', () => {
-    component.onCardMoved();
+    component.move();
     expect(component.task.isInProgress).toBeTruthy();
   });
 
   it('should move card from doing to done', () => {
     component.task.isInProgress = true;
-    component.onCardMoved();
+    component.move();
     expect(component.task.isComplete).toBeTruthy();
   });
 
   it('should throw error if try to move a completed task card', () => {
     component.task.isComplete = true;
     try {
-      component.onCardMoved();
+      component.move();
     } catch (error) {
       expect(error.message).toEqual('Cannot move a task completed');
     }
@@ -80,7 +80,7 @@ describe('TasksCardComponent', () => {
   it('text should have differences after save editing', () => {
     const oldText = component.task.text;
     component.editMode = true;
-    component.textElement.nativeElement.textContent = 'another text';
+    component.text = 'another text';
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('#edit-button'));
     button.nativeElement.dispatchEvent(new Event('click'));

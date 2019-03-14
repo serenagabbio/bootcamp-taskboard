@@ -15,17 +15,17 @@
     class="fav-img"
   />
 
-  <p #title [attr.contenteditable]="editMode" (keyup)="checkEditing()">
+  <p [attr.contenteditable]="editMode" (keyup)="checkEditing()" value="title">
     {{ task.title | uppercase }}
   </p>
-  <p #text [attr.contenteditable]="editMode" (keyup)="checkEditing()">
+  <p [attr.contenteditable]="editMode" (keyup)="checkEditing()" value="text">
     {{ task.text }}
   </p>
 
   <button
     *ngIf="!task.isComplete && !editMode"
     type="button"
-    (click)="onCardMoved()"
+    (click)="move()"
     class="card-button"
   >
     Move
@@ -34,7 +34,7 @@
   <button
     *ngIf="!editMode"
     type="button"
-    (click)="onCardDeleted()"
+    (click)="delete()"
     class="card-button"
   >
     Delete
@@ -46,7 +46,7 @@
     type="button"
     (click)="onSaveEdited()"
     class="card-button"
-    value="{{ title.textContent }}"
+    value="{{ title }}"
     [disabled]="!edited"
   >
     Save

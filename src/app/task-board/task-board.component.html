@@ -1,14 +1,14 @@
 <div class="task-board">
   <h2>Welcome to TaskBoard!</h2>
 
-  <tb-tasks-quick-add (taskCreated)="onTaskCreated($event)">
+  <tb-tasks-quick-add (taskCreated)="create($event)">
   </tb-tasks-quick-add>
 
   <div class="list-container">
     <tb-tasks-list
       [taskList]="taskListToDo"
       title="To Do"
-      (taskUpdated)="onTaskUpdated($event)"
+      (taskUpdated)="update($event)"
       (taskDeleted)="onTaskDeleted($event)"
     >
     </tb-tasks-list>
@@ -16,7 +16,7 @@
     <tb-tasks-list
       [taskList]="taskListDoing"
       title="Doing"
-      (taskUpdated)="onTaskUpdated($event)"
+      (taskUpdated)="update($event)"
       (taskDeleted)="onTaskDeleted($event)"
     >
     </tb-tasks-list>
@@ -24,7 +24,7 @@
     <tb-tasks-list
       [taskList]="taskListDone"
       title="Done"
-      (taskUpdated)="onTaskUpdated($event)"
+      (taskUpdated)="update($event)"
       (taskDeleted)="onTaskDeleted($event)"
     >
     </tb-tasks-list>

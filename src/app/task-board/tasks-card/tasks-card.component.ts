@@ -21,8 +21,8 @@ export class TasksCardComponent implements OnInit, OnDestroy {
   @Input() task: TaskFromApi;
   @Output() taskUpdated = new EventEmitter<TaskFromApi>();
   @Output() taskDeleted = new EventEmitter<TaskFromApi>();
-  @ViewChild('text') textElement: ElementRef;
-  @ViewChild('title') titleElement: ElementRef;
+  text: string;
+  title: string;
   edited = false;
 
   isTitleHighlighted = false;
@@ -50,7 +50,7 @@ export class TasksCardComponent implements OnInit, OnDestroy {
     );
   }
 
-  onCardMoved() {
+  move() {
     if (this.task.isComplete) {
       throw new Error('Cannot move a task completed');
     }
@@ -64,7 +64,7 @@ export class TasksCardComponent implements OnInit, OnDestroy {
     this.taskUpdated.emit(this.task);
   }
 
-  onCardDeleted() {
+  delete() {
     this.taskDeleted.emit(this.task);
   }
 
@@ -75,25 +75,25 @@ export class TasksCardComponent implements OnInit, OnDestroy {
 
   onEdit() {
     if (this.editMode) {
-      this.titleElement.nativeElement.textContent = this.task.title.toUpperCase();
-      this.textElement.nativeElement.textContent = this.task.text;
+      this.title = this.task.title.toUpperCase();
+      this.text = this.task.text;
     }
     this.editMode = !this.editMode;
   }
 
   onSaveEdited() {
     this.editMode = false;
-    this.task.title = this.titleElement.nativeElement.textContent;
-    this.task.text = this.textElement.nativeElement.textContent;
+    this.task.title = this.title;
+    this.task.text = this.text;
     this.taskUpdated.emit(this.task);
   }
 
   checkEditing() {
     this.edited = !(
       this.task.title.toUpperCase().trim() ===
-        this.titleElement.nativeElement.textContent.trim() &&
+        this.title.trim() &&
       this.task.text.trim() ===
-        this.textElement.nativeElement.textContent.trim()
+        this.text.trim()
     );
   }
 

@@ -66,15 +66,15 @@ describe('TaskBoardComponent', () => {
       guid: '123',
       title: 'task title'
     };
-    await component.onTaskCreated(taskToDo);
+    await component.create(taskToDo);
     expect(component.taskListToDo.length).toBeGreaterThan(oldLength);
   });
 
   it('should update a task', async () => {
-    await component.onTaskCreated({ title: 'task title', text: 'task text' });
+    await component.create({ title: 'task title', text: 'task text' });
     const task = component.taskListToDo[component.taskListToDo.length - 1];
     task.title = 'new title';
-    await component.onTaskUpdated(task);
+    await component.update(task);
     const updatedTask = component.taskListToDo[component.taskListToDo.length - 1];
     expect(updatedTask.title).toEqual('new title');
   });
@@ -90,7 +90,7 @@ describe('TaskBoardComponent', () => {
       isComplete: false,
       isFavourite: false
     };
-    await component.onTaskCreated(taskToDo);
+    await component.create(taskToDo);
     await component.onTaskDeleted(taskToDo);
     expect(component.taskListToDo.length).toBeGreaterThanOrEqual(oldLength);
   });
