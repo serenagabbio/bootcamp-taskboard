@@ -23,7 +23,7 @@ export class TasksHttpService implements TasksService {
   }
 
   get(guid: string): Observable<TaskFromApi[]> {
-    return this.http.get<TaskFromApi[]>(this.baseUrl + '/' + guid);
+    return this.http.get<TaskFromApi[]>(`${this.baseUrl} /  ${guid}`);
   }
 
   create(task: TaskDraft): Observable<TaskFromApi> {
