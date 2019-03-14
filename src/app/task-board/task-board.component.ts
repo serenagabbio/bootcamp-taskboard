@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   TasksService,
   TaskDraft,
   TaskFromApi
 } from './tasks-services/tasks.service.base';
 import { switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tb-task-board',
   templateUrl: './task-board.component.html',
   styleUrls: ['./task-board.component.scss']
 })
-export class TaskBoardComponent implements OnInit {
+export class TaskBoardComponent implements OnInit, OnDestroy {
   taskListToDo: TaskFromApi[] = [];
   taskListDoing: TaskFromApi[] = [];
   taskListDone: TaskFromApi[] = [];
+  getAllSubscription$ = new Subscription();
+  subscription$: Subscription;
 
   constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
-    this.tasksService.getAll().subscribe(taskList => {
-      this.filterTaskLists(taskList);
-    });
+    this.getAllSubscription$ = this.tasksService
+      .getAll()
+      .subscribe(taskList => {
+        this.filterTaskLists(taskList);
+      });
   }
 
   filterTaskLists(taskList) {
@@ -32,30 +37,41 @@ export class TaskBoardComponent implements OnInit {
     this.taskListDone = taskList.filter(task => task.isComplete);
   }
 
-  onTaskCreated(taskCreated: TaskDraft) {
-    this.tasksService
+  create(taskCreated: TaskDraft) {
+    const createSubscription$ = this.tasksService
       .create(taskCreated)
       .pipe(switchMap(() => this.tasksService.getAll()))
-      .subscribe(taskList => {
-        this.filterTaskLists(taskList);
-      });
+      .subscribe(
+        taskList => {
+          this.filterTaskLists(taskList);
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
-  onTaskUpdated(taskUpdated: TaskFromApi) {
-    this.tasksService
+  update(taskUpdated: TaskFromApi) {
+    const updateSubscription$ = this.tasksService
       .update(taskUpdated)
       .pipe(switchMap(() => this.tasksService.getAll()))
-      .subscribe(taskList => {
-        this.filterTaskLists(taskList);
-      });
+      .subscribe(
+        taskList => this.filterTaskLists(taskList),
+        error => console.log(error)
+      );
   }
 
   onTaskDeleted(taskDeleted: TaskFromApi) {
-    this.tasksService
+    const deleteSubscription$ = this.tasksService
       .delete(taskDeleted.guid)
       .pipe(switchMap(() => this.tasksService.getAll()))
-      .subscribe(taskList => {
-        this.filterTaskLists(taskList);
-      });
+      .subscribe(
+        taskList => this.filterTaskLists(taskList),
+        error => console.log(error)
+      );
+  }
+
+  ngOnDestroy() {
+    this.getAllSubscription$.unsubscribe();
   }
 }
