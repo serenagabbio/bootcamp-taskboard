@@ -26,7 +26,7 @@ import { provideAppConfig } from '../app-configuration';
     provideAppConfig,
     {
       provide: TasksService,
-      useClass: !environment.production ? TasksHttpService : TasksLocalService
+      useClass: environment.production ? TasksHttpService : TasksLocalService
     }
   ]
 })
