@@ -65,7 +65,10 @@ describe('TasksHttpService', () => {
   it('should return a single task if called get', () => {
     tasksHttpService
       .get(existingTaskGuid)
-      .subscribe(value => expect(value).toBeTruthy());
+      .subscribe(value => {
+        expect(value).toBeTruthy()
+        expect(typeof value).toBe('TaskFromApi');
+      });
   });
 
   it('should return all the tasks if called getAll', () => {

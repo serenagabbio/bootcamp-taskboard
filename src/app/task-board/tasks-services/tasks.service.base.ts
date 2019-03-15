@@ -20,5 +20,5 @@ export abstract class TasksService {
   abstract create(task: TaskDraft): Observable<TaskFromApi>;
   abstract update(task: TaskFromApi): Observable<TaskFromApi>;
   abstract delete(guid: string): Observable<TaskFromApi>;
-  abstract get(guid: string): Observable<TaskFromApi[]>;
+  abstract get(guid: string): Observable<TaskFromApi>;
 }

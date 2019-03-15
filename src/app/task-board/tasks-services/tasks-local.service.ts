@@ -50,8 +50,8 @@ export class TasksLocalService implements TasksService {
     return of(oldTask);
   }
 
-  get(guid: string): Observable<TaskFromApi[]> {
-    const tasksList = this.taskList.filter(element => element.guid === guid);
-    return of(tasksList);
+  get(guid: string): Observable<TaskFromApi> {
+    const task = this.taskList.find(element => element.guid === guid);
+    return of(task);
   }
 }
