@@ -1,6 +1,10 @@
 # TaskBoard
 
-TaskBoard Application by sere-g
+TaskBoard Application by serenagabbio
+
+## To install dependencies
+
+npm install
 
 ## Development server
 
@@ -17,4 +21,3 @@ Run npm test
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
